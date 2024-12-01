@@ -8,14 +8,14 @@
             min-height: 100%;
             background-color: #ffeb3b;
             min-height: 200px;
-            max-height: 200px;
+            max-height: 250px;
             border-radius: 10px;
             padding: 20px;
             margin: 10px;
         }
         .note {
             overflow-y: scroll;
-            max-height: 120px;
+            max-height: 80px;
             scrollbar-width: none;
         }
         .title-class {
@@ -27,6 +27,14 @@
             font-size: 12px;
             color: #424242;
             margin-bottom: 3px;
+        }
+        .special-color1{
+            background: none;
+            color: rgb(0, 0, 0);
+        }
+        .special-color1:hover{
+            background: orange;
+            color: white;
         }
     </style>
 </head>
@@ -40,6 +48,10 @@
             <div class="form-group">
                 <label for="title">Title:</label>
                 <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="images">Images:</label>
+                <input type="file" class="form-control" id="images" name="images" multiple>
             </div>
             <div class="form-group">
                 <label for="content">Content:</label>
@@ -63,6 +75,12 @@
                         <div class="note">
                             <p>{{ $note->content }}</p>
                         </div>
+                        <a href="{{ route('notes.edit', $note->id) }}" class="btn btn-warning mt-2 special-color1">Edit</a>
+                        <form action="{{ route('notes.delete', $note->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger mt-2 ml-2 special-color2">Delete</button>
+                        </form>
                     </div>
                 </div>
             @endforeach
