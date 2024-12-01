@@ -32,9 +32,9 @@
             background: none;
             color: rgb(0, 0, 0);
         }
-        .special-color1:hover{
-            background: orange;
-            color: white;
+        .special-color2{
+            background: none;
+            color: rgb(255, 0, 0);
         }
     </style>
 </head>
@@ -42,20 +42,20 @@
     <h1>Williams Notes</h1>
 
     <div class="container mt-5">
-        <h2>Create New Note</h2>
-        <form action="{{ route('notes.store') }}" method="POST">
+        <h2>Create Note</h2>
+        <form action="{{ route('notes.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="title">Title:</label>
                 <input type="text" class="form-control" id="title" name="title" required>
             </div>
             <div class="form-group">
-                <label for="images">Images:</label>
-                <input type="file" class="form-control" id="images" name="images" multiple>
-            </div>
-            <div class="form-group">
                 <label for="content">Content:</label>
                 <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="image">Image:</label>
+                <input type="file" class="form-control" id="image" name="image">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -75,6 +75,9 @@
                         <div class="note">
                             <p>{{ $note->content }}</p>
                         </div>
+                        @if ($note->image)
+                            <img src="{{ Storage::url($note->image->image) }}" alt="Note Image" class="img-fluid mb-2 pd-1">
+                        @endif
                         <a href="{{ route('notes.edit', $note->id) }}" class="btn btn-warning mt-2 special-color1">Edit</a>
                         <form action="{{ route('notes.delete', $note->id) }}" method="POST" style="display:inline;">
                             @csrf
